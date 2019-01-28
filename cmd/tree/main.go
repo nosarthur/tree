@@ -14,8 +14,18 @@ import (
 type path string
 
 func (p *path) GetString() string {
-	return filepath.Base(string(*p))
+	fname := string(*p)
+	fi, err := os.Stat(fname)
+	if err != nil {
+		log.Fatalf("cannot stat %s: %v", fname, err)
+	}
+
+	if fi.IsDir() {
+		return tree.Blueify(filepath.Base(fname))
+	}
+	return filepath.Base(fname)
 }
+
 func (p *path) GetChildren() []tree.Node {
 	fname := string(*p)
 	fi, err := os.Stat(fname)

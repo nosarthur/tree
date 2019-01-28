@@ -26,3 +26,7 @@ func Traverse(root Node, indent string, depth int) {
 		Traverse(child, indent+add, depth-1)
 	}
 }
+
+func Blueify(s string) string {
+	return "\x1b[1;34m" + s + "\x1b[0m"
+}
