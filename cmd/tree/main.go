@@ -14,6 +14,9 @@ import (
 type path string
 
 func (p *path) GetString() string {
+	// FIXME: It's wasteful to do os.Stat twice.
+	//	      But I don't really care about this path display tree.
+	// 		  Maybe won't fix.
 	fname := string(*p)
 	fi, err := os.Stat(fname)
 	if err != nil {
@@ -21,7 +24,7 @@ func (p *path) GetString() string {
 	}
 
 	if fi.IsDir() {
-		return tree.Blueify(filepath.Base(fname))
+		return tree.Colorize(filepath.Base(fname), tree.Blue)
 	}
 	return filepath.Base(fname)
 }

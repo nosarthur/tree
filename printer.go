@@ -3,10 +3,23 @@ package tree
 import "fmt"
 
 // Node is an abstraction of data string and tree topology.
-type Node interface {
-	GetString() string
-	GetChildren() []Node
-}
+type (
+	Node interface {
+		GetString() string
+		GetChildren() []Node
+	}
+	Color int
+)
+
+const (
+	Black Color = iota + 30
+	Red
+	Green
+	Yellow
+	Blue
+	Magenta
+	Cyan
+)
 
 // Traverse prints out the whole tree structure.
 func Traverse(root Node, indent string, depth int) {
@@ -27,6 +40,7 @@ func Traverse(root Node, indent string, depth int) {
 	}
 }
 
-func Blueify(s string) string {
-	return "\x1b[1;34m" + s + "\x1b[0m"
+// Colorize add terminal color to string s.
+func Colorize(s string, color Color) string {
+	return fmt.Sprintf("\x1b[1;%vm%s\x1b[0m", color, s)
 }
